@@ -3,7 +3,7 @@ import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import OrderPage from "../pages/OrderPage/OrderPage";
 import ProductPage from "../pages/ProductsPage/ProductsPage";
 
-const routes = [
+export const routes = [
     {
         path: '/',
         page: HomePage,

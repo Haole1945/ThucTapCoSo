@@ -1,6 +1,6 @@
 import React from "react";
 import { Col } from "antd";
-import { WrapperHeader, WrapperTextHeader } from "./style";
+import { WrapperHeader, WrapperHeaderAccount, WrapperTextHeader, WrapperTextHeaderSmall } from "./style";
 import Search from "antd/es/transfer/search";
 import { UserOutlined,
   CaretDownOutlined,
@@ -10,7 +10,7 @@ import { UserOutlined,
 function HeaderComponent() {
   return (
     <div>
-      <WrapperHeader gutter = {16}>
+      <WrapperHeader >
         <Col span={6}>
           <WrapperTextHeader>SHOP</WrapperTextHeader>
         </Col>
