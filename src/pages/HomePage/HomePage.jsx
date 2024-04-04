@@ -23,6 +23,7 @@ const HomePage = () => {
       <div style={{marginTop: '20px', display: 'flex', alignItems: 'center', gap: '20px' }}>
         <CardComponent />
      </div>
+      <NavbarComponent />
     </div>
    </> 
   )
