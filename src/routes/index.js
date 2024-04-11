@@ -1,3 +1,4 @@
+import TypeProduct from "../components/TypeProduct/TypeProduct";
 import HomePage from "../pages/HomePage/HomePage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import OrderPage from "../pages/OrderPage/OrderPage";
@@ -18,6 +19,12 @@ export const routes = [
     {
         path: '/products',
         page: ProductPage,
+        isShowHeader: true
+
+    },
+    {
+        path: '/type',
+        page: TypeProductPage,
         isShowHeader: true
 
     },

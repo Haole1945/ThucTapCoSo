@@ -8,3 +8,14 @@ export const WrapperTypeProduct = styled.div`
     border-bottom: 1px solid red;
     height:44px;
 `
+export const WrapperButtonMore = styled(ButtonComponent)`
+    &:hover {
+        color: #fff;
+        background: rgb(13,92,182);
+        span {
+            color: #fff;
+        }
+    }    
+    width: 100%;
+    text-align:center; 
+`
