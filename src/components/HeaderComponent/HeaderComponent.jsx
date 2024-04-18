@@ -34,8 +34,9 @@ function HeaderComponent() {
             </div>
           </WrapperHeaderAccount>
           <div>
-         
+             <Badge count = {4} size = "small">
              <ShoppingCartOutlined style={{ fontSize: '30px', color: '#fff'}} />
+            </Badge>
              <WrapperTextHeaderSmall>Giỏ hàng</WrapperTextHeaderSmall>
             
           </div>
