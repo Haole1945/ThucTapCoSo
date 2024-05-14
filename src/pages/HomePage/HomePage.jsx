@@ -12,24 +12,26 @@ const HomePage = () => {
   const arr = ['1','2','3'];
   return (  
    <>
-   <div style={{ pading: "0 120px" }}>
+   <div style={{ width: '1270px', margin: '0 auto'}}>
       <WrapperTypeProduct>
         {arr.map((item) => {
           return <TypeProduct name={item} key={item} />;
+          
         })}
       </WrapperTypeProduct>
        </div>
-      <div id="container" style={{ backgroundColor: '#efefef', padding:'0 120px', height: '1000px',witdh: '100%'}}>
-      <SliderComponent arrImages={{slider1, slider2, slider3}}/>  
-      <WrapperProducts>
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
-        <CardComponent />
-    </WrapperProducts>
+      <div className="body" style={{ witdh: '100%',backgroundColor: '#efefef'}}>
+        <div id="container" style={{ height: '1000px', width: '1270px', margin: '0 auto' }}>
+        <SliderComponent arrImages={{slider1, slider2, slider3}}/>  
+        <WrapperProducts>
+          <CardComponent />
+          <CardComponent />
+          <CardComponent />
+          <CardComponent />
+          <CardComponent />
+          <CardComponent />
+          <CardComponent />
+      </WrapperProducts>
     <div style={{width: '100%', display: 'flex',justifyContent:'center',marginTop:'10px'}}>
     <WrapperButtonMore textButton= " Read More" type="outline" styleButton = {{
       border: '1px solid rgb(11,116,229)',color: 'rgb(11,116,229)',
@@ -38,7 +40,8 @@ const HomePage = () => {
       styleTextButton= {{ fontWeight: 500 }} />
     </div>
    </div>   
-   </>
+  </div>
+  </>
   )
 }
 export default HomePage;
