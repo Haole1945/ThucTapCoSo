@@ -1,47 +1,40 @@
-import React from "react";
-import TypeProduct from "../../components/TypeProduct/TypeProduct";
-import { WrapperTypeProduct } from '.style';
-import SliderComponent from "../../components/SliderComponent/SliderComponent";
-import slider1  from '../../assets/images/slider1.webp'
-import slider2  from '../../assets/images/slider2.webp'
-import slider3  from '../../assets/images/slider3.webp  '
-import CardComponent from "../../components/CardComponent/CardComponent";
-import { WrapperButtonMore, WrapperProducts, WrapperTypeProduct } from "./style";
+import React from 'react'
+import { WrapperButtonMore, WrapperProducts, WrapperRow,WrapperNavBar } from './style'
+import slider_2 from '../../assets/images/slider_2.webp'
+import slider_3 from '../../assets/images/slider_3.webp'
+import SliderComponent from '../../components/SliderComponent/SliderComponent'
+import CardComponent from '../../components/CardComponent/CardComponent'
+import NavbarComponent from '../../components/NavbarComponent/NavbarComponent' 
+import {Col} from 'antd'
 
 const HomePage = () => {
-  const arr = ['1','2','3'];
-  return (  
-   <>
-   <div style={{ width: '1270px', margin: '0 auto'}}>
-      <WrapperTypeProduct>
-        {arr.map((item) => {
-          return <TypeProduct name={item} key={item} />;
-          
-        })}
-      </WrapperTypeProduct>
-       </div>
-      <div className="body" style={{ witdh: '100%',backgroundColor: '#efefef'}}>
-        <div id="container" style={{ height: '1000px', width: '1270px', margin: '0 auto' }}>
-        <SliderComponent arrImages={{slider1, slider2, slider3}}/>  
-        <WrapperProducts>
-          <CardComponent />
-          <CardComponent />
-          <CardComponent />
-          <CardComponent />
-          <CardComponent />
-          <CardComponent />
-          <CardComponent />
-      </WrapperProducts>
-    <div style={{width: '100%', display: 'flex',justifyContent:'center',marginTop:'10px'}}>
-    <WrapperButtonMore textButton= " Read More" type="outline" styleButton = {{
-      border: '1px solid rgb(11,116,229)',color: 'rgb(11,116,229)',
-      width: '240px', height:'38px', borderRadius: '4px'
-    }}
-      styleTextButton= {{ fontWeight: 500 }} />
+  return (
+    <div className="container" style={{marginTop: '32px'}}>
+      <div style={{width: '100%', padding: '0 80px'}}>
+          <SliderComponent arrImages={[slider_2, slider_3]} />
+      </div>
+      <WrapperRow>
+        <WrapperNavBar span={6} >
+          <NavbarComponent />
+        </WrapperNavBar>
+        <Col span={18}>
+          <WrapperProducts>
+            <CardComponent />
+            <CardComponent />
+            <CardComponent />
+            <CardComponent /><CardComponent /><CardComponent />
+          </WrapperProducts>
+          <div style = {{width: '100%', display: 'flex', justifyContent:'center', marginTop: '20px'}}>
+            <WrapperButtonMore textButton="Xem thêm" type="outline" styleButton={{
+              color:'#fff', backgroundColor:'rgb(70,0,0)', border: '1px solid #000000',
+              width: '240px', height: '38px', borderRadius: '4px'
+            }}
+            styleTextButton={{fontWeight: 500}}/>
+          </div>
+        </Col>
+      </WrapperRow>
     </div>
-   </div>   
-  </div>
-  </>
   )
 }
-export default HomePage;
+
+export default HomePage

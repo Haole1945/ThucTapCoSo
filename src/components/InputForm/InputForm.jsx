@@ -1,15 +1,12 @@
-
 import React, { useState } from 'react'
-import { WrapperInputStyle } from './style'
+import { Input } from 'antd'
 
-const InputForm = ( props ) => {
+const InputForm = (props) => {
     const [valueInput, setValueInput] = useState('')
-    const { placeholder = 'Nhap text', ...rests } = props
-    return (
-     
-       <WrapperInputStyle placeholder ={placeholder} valueInput = {valueInput} {...rests} />    
-        
-    )
-}   
+    const {placeholder = 'Nhập text',...rests } = props
+  return (
+    <Input placeholder = {placeholder} valueInput={valueInput} {...rests}/>
+  )
+}
 
 export default InputForm

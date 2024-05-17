@@ -4,8 +4,8 @@ import HeaderComponent from '../HeaderComponent/HeaderComponent'
 const DefaultComponent = ({children}) => {
   return (
     <div>
-        <HeaderComponent />
-        {children}
+      <HeaderComponent />
+      {children}
     </div>
   )
 }

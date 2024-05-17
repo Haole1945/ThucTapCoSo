@@ -1,72 +1,58 @@
-import { Image, InputNumber } from "antd";
-import styled from "styled-components";
-export const WrapperStyleImageSmall =  styled(Image)`
-    height: 64px;
-    width: 64px;
-`
-export const WrapperStyleColImage = styled(Col)`
-    flex-basic: unset;
-    display: flex;
-`
+import styled from "styled-components"
+import { InputNumber} from 'antd'
+
 export const WrapperStyleNameProduct = styled.h1`
-    color : rgb(36, 36, 36);
-    font-size:24px;
-    font-weight: 300;
-    line-weight: 320px;
+    font-size: 34px;
+    color: rgb(36,36,36);
+    font-weight: 900;
+    line-height: 32px
     word-break: break-word;
+    margin-top: 40px
 `
 
-export const WrapperStyleTextSell = styled.span`
-    font-size:15px;
-    line-height:24px;
-    color: rgb(120, 120, 120)
+export const WrapperPriceProduct = styled.h1`
+    border-radius: 4px;
+    margin: 24px 0 32px 32px;
 `
-export const WrapperPriceProduct = styled.div`
-    background: rgb(250, 250, 250);
-    border-radius:4px;
-`
+
 export const WrapperPriceTextProduct = styled.h1`
-    font-size: 32px;
-    line-weight: 40px;
-    margin-right: 8px;
+    font-size: 28px;
+    line-height: 40px;
     font-weight: 500;
-    padding: 10px;
-    margin-top: 10px;
 `
-export const WrapperAdressProduct  = styled.div`
+
+export const WrapperAddressProduct = styled.div`
     span.address {
         text-decoration: underline;
-        font-size: 15px;
+        font-size: 16px;
         line-height: 24px;
         font-weight: 500;
         white-space: nowrap;
         overflow: hidden;
-        text-overflow: ellipsisl
+        text-overflow: ellipsis;
     },
-    span.change-address{
+    span.change-address {
         color: rgb(11, 116, 229);
         font-size: 16px;
         line-height: 24px;
         font-weight: 500;
     }
+    margin: 20px 0;
 `
-export const WrapperQualityProduct = styled.div`
-        display: flex;
-        gap: 4px;
-        align-items: center;
-        width: 120px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
 
+export const WrapperQualityProduct = styled.div`
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 92px; 
+    margin-top: 16px;
 `
 
 export const WrapperInputNumber = styled(InputNumber)`
-    &.ant-input-number.ant-input-number-sm {
-        width: 60px;
+    &.ant-input-number.ant-input-number-sm{
+        width: 40px;
         border-top: none;
         border-bottom: none;
-        &.ant-input-number-handler-wrap {
-            dispay: none !important;
-        }
     }
 `

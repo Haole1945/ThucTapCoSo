@@ -9,4 +9,4 @@ export const WrapperInputStyle = styled(Input)`
     &:focus {
         background-color: rgb(232,240,254);
     }
-`
+`   

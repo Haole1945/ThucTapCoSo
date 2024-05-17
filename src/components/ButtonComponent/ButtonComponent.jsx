@@ -1,14 +1,18 @@
 import React from 'react'
+import {Button} from 'antd'
 
-const ButtonComponent = ({size, styleButton, styleTextButton, textButton,...rests}) => {
+const ButtonComponent = (props) => {
+  const {size,styleButton, styleTextButton,textButton, ...rest} = props
   return (
-    <Button
-        size={size}
-        style={{ styleButton }}
-        {...rests}
-      
-      ><span style={styleTextButton}>{textButton}</span>
-      </Button>
+    <Button 
+            size={size} 
+            //style={{background: backgroundColorButton, border: 'rgb(13, 92, 182)'}} 
+            style={styleButton}
+            //icon={<SearchOutlined color={colorButton}/>}
+            {...rest}
+    >
+            <span style={styleTextButton}>{textButton}</span>
+    </Button>
   )
 }
 

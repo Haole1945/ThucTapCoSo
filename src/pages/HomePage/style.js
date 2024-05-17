@@ -1,28 +1,32 @@
 import styled from "styled-components";
+import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
+import {Row, Col} from 'antd'
 
-export const WrapperTypeProduct = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    justify- content: flex-start;
-    border-bottom: 1px solid red;
-    height:44px;
-`
 export const WrapperButtonMore = styled(ButtonComponent)`
     &:hover {
-        color: #fff;
-        background: rgb(13,92,182);
-        span {
-            color: #fff;
-        }
-    }    
+        opacity: 0.8;
+    }
     width: 100%;
-    text-align:center; 
+    text-align: center;
 `
+
 export const WrapperProducts = styled.div`
     display: flex;
-    justify- content: flex-start;
-    gap: 15px;
-    margin-top:20px;
+    justify-content: center;
+    gap: 32px;
     flex-wrap: wrap;
+`
+
+export const WrapperRow = styled(Row)`
+    padding: 40px 120px; 
+    margin-top: 40px;
+    background-color: #efefef;
+    height: auto; 
+    width: 100%;
+`
+
+export const WrapperNavBar = styled(Col)`
+    background-color: #fff;
+    height: fit-content;
+    padding: 20px 20px;
 `
