@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
         password: {type: String, required: true},
         isAdmin: {type: Boolean, required: true, default: false},
         phone:{type: Number, required: true},
-        acess_token: {type: String},
+        access_token: {type: String},
         refresh_token: {type: String},
     },
     {
