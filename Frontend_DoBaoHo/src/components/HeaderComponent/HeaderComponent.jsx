@@ -1,38 +1,71 @@
-import { Badge, Col } from 'antd'
-import React from 'react'
-import { WrapperHeader, WrapperTextHeader, WrapperHeaderAccount, WrapperTextHeaderSmall } from './style'
+import { Badge, Button, Col, Popover } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { WrapperHeader, WrapperTextHeader, WrapperHeaderAccount, WrapperTextHeaderSmall, WrapperContentPopup } from './style'
 import { UserOutlined, CaretDownOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import ButtonInputSearch from '../ButtonInputSearch/ButtonInputSearch'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import * as userService from '../../services/userService'
+import {resetUser} from '../../redux/slides/userSlide'
 
-const HeaderComponent = () => {
 
+const HeaderComponent = ({isHiddenSearch = false, isHiddenCart = false}) => {
   const user = useSelector((state) => state.user)
-
+  const dispatch = useDispatch()
+  const [userName, setUserName] = useState('')
   const navigate = useNavigate()
   const handleNavigateLogin = () => {
     navigate('/sign-in')
   }
 
+  const handleLogout = async() => {
+    await userService.logoutUser()
+    dispatch(resetUser())
+  }
+
+  useEffect(() =>{
+    
+    setUserName(user?.name)
+   
+  },[user?.name])
+
+  const content = (
+    <div>
+      <WrapperContentPopup onClick={() => navigate('/profile-user')}>Thông tin người dùng</WrapperContentPopup>
+      {user?.isAdmin && (
+        
+        
+        <WrapperContentPopup onClick={() => navigate('/system/admin')}>Quản lí hệ thống</WrapperContentPopup>
+      )}
+      <WrapperContentPopup onClick={handleLogout}>Đăng xuất</WrapperContentPopup>
+    </div>
+  )
+
   return (
     <div>
-      <WrapperHeader gutter={16}>
+      <WrapperHeader gutter={16} style={{justifyContent: isHiddenSearch && isHiddenSearch ? 'space-between' : 'unset'}}>
         <Col span={6}>
             <WrapperTextHeader>ĐỒ BẢO HỘ XE MÁY</WrapperTextHeader>    
         </Col>
-        <Col span={12}>
+        {!isHiddenSearch && (
+          <Col span={12}>
             <ButtonInputSearch
               size="large"
               textButton="Tìm kiếm"
               placeholder="Nhập từ khóa để tìm kiếm" 
             />
         </Col>
+        )}
+        
         <Col span={6} style={{display:'flex', gap: '20px', alignItems: 'center'}}>
             <WrapperHeaderAccount>
                 <UserOutlined style={{fontSize: '30px'}}/>
-                {user?.name ? (
-                  <div style={{cursor: 'pointer'}}>{user.name}</div>
+                {user?.access_token ? (
+                  <>
+                  <Popover content={content} trigger="click" >
+                    <div style={{cursor: 'pointer'}}>{userName?.length ? userName : user?.email}</div>
+                  </Popover>
+                  </>
                 ): (
                   <div onClick={handleNavigateLogin} style={{cursor: 'pointer'}}>
                       <WrapperTextHeaderSmall>Đăng nhập/Đăng ký</WrapperTextHeaderSmall>
@@ -43,12 +76,15 @@ const HeaderComponent = () => {
                   </div>
                 )}
             </WrapperHeaderAccount>
-            <div>
+            {!isHiddenCart && (
+              <div>
                 <Badge count={4} size="small">
                   <ShoppingCartOutlined style={{fontSize: '30px', color: '#fff'}}/>
                 </Badge>
                 <span style={{ color: '#fff'}}>Giỏ hàng</span>
-            </div>
+              </div>
+            )}
+            
         </Col>
       </WrapperHeader>
     </div>

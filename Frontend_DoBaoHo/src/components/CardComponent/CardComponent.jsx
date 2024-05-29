@@ -2,7 +2,8 @@
 import React from 'react'
 import { StyleNameProduct, WrapperPriceText, WrapperPriceDiscountText, WrapperCardStyle } from './style';
 
-const CardComponent = () => {
+const CardComponent = (props) => {
+  const {countInStock,description,image,name,price,type} = props
   return (
     <WrapperCardStyle
         hoverable
@@ -11,16 +12,9 @@ const CardComponent = () => {
         bodyStyle={{ padding:'10px'}}
         cover={<img alt="example" src="https://bikersaigon.net/wp-content/uploads/2016/07/khan-ninja-loai-tot-mau-xam.jpg" />}
     >
-      <StyleNameProduct>KHĂN TRÙM ĐẦU NINJA</StyleNameProduct>
-      {/* <WrapperReportText>
-        <span style = {{marginRight: '4px'}}>
-          <span>4.5 <StarFilled style={{fontSize:'10px', color: 'yellow'}} /></span>
-          <span> | Đã bán 1000+</span>
-        </span>
-      </WrapperReportText> */}
+      <StyleNameProduct>{name}</StyleNameProduct>
       <WrapperPriceText>
-        1.000.000
-        <WrapperPriceDiscountText>-5%</WrapperPriceDiscountText>
+        <span style={{ marginRight: '8px'}}>{price}</span>
       </WrapperPriceText>
     </WrapperCardStyle>
   )
