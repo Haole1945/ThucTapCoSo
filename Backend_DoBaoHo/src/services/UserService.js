@@ -150,7 +150,6 @@ const getDetailsUser = (id) => {
             const user = await User.findOne({
                 _id: id
             })
-            console.log('user',user)
             if(user === null){
                 resolve({
                     status: 'OK',

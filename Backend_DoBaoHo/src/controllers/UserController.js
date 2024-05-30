@@ -132,7 +132,6 @@ const getDetailsUser = async (req, res) => {
 }
 
 const refreshToken = async (req, res) => {
-    console.log('req.cookies',req.cookies)
     try {
         const token = req.cookies['refresh-token']
         if (!token) {
