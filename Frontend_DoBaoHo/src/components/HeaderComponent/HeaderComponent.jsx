@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import * as userService from '../../services/userService'
 import {resetUser} from '../../redux/slides/userSlide'
+import { searchProduct } from '../../redux/slides/productSlide'
 
 
 const HeaderComponent = ({isHiddenSearch = false, isHiddenCart = false}) => {
@@ -14,6 +15,7 @@ const HeaderComponent = ({isHiddenSearch = false, isHiddenCart = false}) => {
   const dispatch = useDispatch()
   const [userName, setUserName] = useState('')
   const navigate = useNavigate()
+  const [search,setSearch] = useState('')
   const handleNavigateLogin = () => {
     navigate('/sign-in')
   }
@@ -40,7 +42,10 @@ const HeaderComponent = ({isHiddenSearch = false, isHiddenCart = false}) => {
       <WrapperContentPopup onClick={handleLogout}>Đăng xuất</WrapperContentPopup>
     </div>
   )
-
+  const onSearch = (e) => {
+    setSearch(e.target.value)
+    dispatch(searchProduct(e.target.value))
+  }
   return (
     <div>
       <WrapperHeader gutter={16} style={{justifyContent: isHiddenSearch && isHiddenSearch ? 'space-between' : 'unset'}}>
@@ -53,6 +58,7 @@ const HeaderComponent = ({isHiddenSearch = false, isHiddenCart = false}) => {
               size="large"
               textButton="Tìm kiếm"
               placeholder="Nhập từ khóa để tìm kiếm" 
+              onChange = {onSearch}
             />
         </Col>
         )}

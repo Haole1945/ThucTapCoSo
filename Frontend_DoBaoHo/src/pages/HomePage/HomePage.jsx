@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { WrapperButtonMore, WrapperProducts, WrapperRow,WrapperNavBar } from './style'
 import slider_2 from '../../assets/images/slider_2.webp'
 import slider_3 from '../../assets/images/slider_3.webp'
@@ -8,18 +8,41 @@ import NavbarComponent from '../../components/NavbarComponent/NavbarComponent'
 import {Col} from 'antd'
 import { useQuery } from '@tanstack/react-query'
 import * as ProductService from '../../services/ProductService'
-
+import { useSelector } from 'react-redux'
+import { useDebounce } from '../../hooks/useDebounce'
+import Loading from '../../components/LoadingComponent/Loading'
 const HomePage = () => {
-  
-  const fetchProductAll = async() => {
-    const res = await ProductService.getAllProduct()
-    console.log('res',res)
-    return res
+  const searchProduct = useSelector((state) => state?.product?.search)
+  const searchDebounce = useDebounce(searchProduct, 500)
+  const refSearch = useRef()
+  const [loading, setLoading] = useState(false)
+  const [stateProducts, setStateProducts] = useState([])
+  const fetchProductAll = async(search) => {
+    const res = await ProductService.getAllProduct(search)
+    if(search?.length > 0 || refSearch.current){
+      setStateProducts(res?.data)
+    }else{
+      return res
+    }  
   } 
+  useEffect(() => {
+    if(refSearch.current){
+      setLoading(true)
+      fetchProductAll(searchDebounce)
+    }
+    refSearch.current = true
+    setLoading(false)
+  }, [searchDebounce])
+
   const {isPending,data: products} = useQuery({ queryKey: 'product', queryFn: fetchProductAll })
 
-  console.log('data',products)
+  useEffect(()=>{
+    if(products?.data?.length > 0){
+      setStateProducts(products?.data)
+    }
+  },[products])
   return (
+  <Loading isPending={isPending}>
     <div className="container" style={{marginTop: '32px'}}>
       <div style={{width: '100%', padding: '0 80px'}}>
           <SliderComponent arrImages={[slider_2, slider_3]} />
@@ -30,7 +53,8 @@ const HomePage = () => {
         </WrapperNavBar>
         <Col span={18}>
           <WrapperProducts>
-            {products?.data?.map((product)=>{
+            {stateProducts?.map((product)=>{
+              console.log('product',product)
               return(
                 <CardComponent 
                   key={product.id} 
@@ -59,6 +83,7 @@ const HomePage = () => {
         </Col>
       </WrapperRow>
     </div>
+    </Loading>
   )
 }
 

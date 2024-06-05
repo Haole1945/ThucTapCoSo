@@ -1,9 +1,7 @@
-
-
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { WrapperHeader } from './style'
-import { Button, Form, Modal, Upload, message } from 'antd'
-import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons'
+import { Button, Form, Modal, Space, Upload, message } from 'antd'
+import { DeleteOutlined, EditOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import TableComponents from '../TableComponents/TableComponents'
 import InputComponent from './../InputComponent/InputComponent';
 import { getBase64 } from '../../utils'
@@ -12,6 +10,7 @@ import { useMutationHooks } from '../../hooks/useMutationHook'
 import { useQuery } from '@tanstack/react-query'
 import DrawerComponent from '../DrawerComponent/DrawerComponent'
 import { useSelector } from 'react-redux'
+import ModalComponent from '../ModalComponent/ModalComponent'
 
 const AdminProduct = () => {
   const user = useSelector((state)=>state?.user)
@@ -20,6 +19,8 @@ const AdminProduct = () => {
   const [rowSelected, setRowSelected] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoadingUpdate, setIsLoadingUpdate] = useState(false)
+  const [isModalOpenDelete, setIsModalOpenDelete] = useState(false)
+  const searchInput = useRef(null);
   const [stateProduct, setStateProduct] = useState({
     name: '',
     price: '',
@@ -52,7 +53,6 @@ const AdminProduct = () => {
         name: res?.data?.name,
         price: res?.data?.price,
         description: res?.data?.description,
-        rating: res?.data?.rating,
         image: res?.data?.image,
         type: res?.data?.type,
         countInStock: res?.data?.countInStock,
@@ -65,26 +65,32 @@ const AdminProduct = () => {
 
   useEffect(() => {
     if (rowSelected) {
+      setIsLoadingUpdate(true)
       fetchGetDetailsProduct(rowSelected)
     }
   }, [rowSelected])
 
   const handleDetailsProduct = () => {
-    if (rowSelected) {
-      fetchGetDetailsProduct(rowSelected)
-    }
     setIsOpenDrawer(true)
   }
-
   const renderAction = () => {
     return (
       <div>
-        <DeleteOutlined style={{ fontSize: '30px', color: 'green', cursor: 'pointer' }} />
+        <DeleteOutlined style={{ color: 'red', fontSize: '30px', cursor: 'pointer' }} onClick={() => setIsModalOpenDelete(true)} />
         <EditOutlined style={{ fontSize: '30px', color: 'red', cursor: 'pointer' }} onClick={handleDetailsProduct} />
       </div>
     )
   }
-
+  const handleCancelDelete = () => {
+    setIsModalOpenDelete(false)
+  }
+  const handleDeleteProduct = () => {
+    mutationDeleted.mutate({ id: rowSelected, token: user?.access_token }, {
+      onSettled: () => {
+        queryProduct.refetch()
+      }
+    })
+  }
   const handleCancel = () => {
     setIsModalOpen(false);
     setStateProduct({
@@ -123,24 +129,136 @@ const AdminProduct = () => {
       const res = ProductService.updateProduct(id,token,{...rests})
       return res
     },
-    onSetted = () => {
-      
-    }
+   
   );
+  
+  const mutationDeleted = useMutationHooks(
+    (data) => {
+      const { id,
+        token,
+      } = data
+      const res = ProductService.deleteProduct(
+        id,
+        token)
+      return res
+    },
+  )
 
-  const { data, isPending, isSuccess, isError } = mutation
 
-  const { isPending: isPendingProducts, data: products } = useQuery({ queryKey: ['products'], queryFn: getAllProducts })
+
+  const queryProduct = useQuery({ queryKey: ['products'], queryFn: getAllProducts })
+  const { isPending: isLoadingProducts, data: products } = queryProduct
+
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    // setSearchText(selectedKeys[0]);
+    // setSearchedColumn(dataIndex);
+  };
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    // setSearchText('');
+  };
+
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
+      <div
+        style={{
+          padding: 8,
+        }}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
+        <InputComponent
+          ref={searchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{
+            marginBottom: 8,
+            display: 'block',
+          }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Reset
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined
+        style={{
+          color: filtered ? '#1890ff' : undefined,
+        }}
+      />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    // render: (text) =>
+    //   searchedColumn === dataIndex ? (
+    //     // <Highlighter
+    //     //   highlightStyle={{
+    //     //     backgroundColor: '#ffc069',
+    //     //     padding: 0,
+    //     //   }}
+    //     //   searchWords={[searchText]}
+    //     //   autoEscape
+    //     //   textToHighlight={text ? text.toString() : ''}
+    //     // />
+    //   ) : (
+    //     text
+    //   ),
+  });
 
   const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
-      render: (text) => <a>{text}</a>,
+      sorter: (a, b) => a.name.length - b.name.length,
+      ...getColumnSearchProps('name')
     },
     {
       title: 'Price',
       dataIndex: 'price',
+      sorter: (a, b) => a.price - b.price,
+      filters: [
+        {
+          text: '>= 50',
+          value: '>=',
+        },
+        {
+          text: '<= 50',
+          value: '<=',
+        }
+      ],
+      onFilter: (value, record) => {
+        if (value === '>=') {
+          return record.price >= 50
+        }
+        return record.price <= 50
+      },
     },
     {
       title: 'Type',
@@ -149,12 +267,18 @@ const AdminProduct = () => {
     {
       title: 'Action',
       dataIndex: 'action',
-      render: renderAction,
+      render: renderAction
     },
   ];
   const dataTable = products?.data?.length && products?.data?.map((product) => {
     return { ...product, key: product._id }
   })
+
+  
+
+  const { data, isPending, isSuccess, isError } = mutation
+  const { data:dataUpdated,isPending: isLoadingUpdated, isSuccess:isSuccessUpdated, isError: isErrorUpdated } = mutationUpdate
+  const { data: dataDeleted, isPending: isLoadingDeleted, isSuccess: isSuccessDelected, isError: isErrorDeleted } = mutationDeleted
 
   useEffect(() => {
     if (isSuccess && data?.status === 'OK') {
@@ -164,8 +288,14 @@ const AdminProduct = () => {
       message.error()
     }
   }, [isSuccess]);
-  const { data:dataUpdated,isLoading: isLoadingUpdated, isSuccess:isSuccessUpdated, isError: isErrorUpdated } = mutationUpdate
-
+  useEffect(() => {
+    if (isSuccessDelected && dataDeleted?.status === 'OK') {
+      message.success()
+      handleCancelDelete()
+    } else if (isErrorDeleted) {
+      message.error()
+    }
+  }, [isSuccessDelected])
   useEffect(() => {
     if (isSuccessUpdated && dataUpdated?.status === 'OK') {
       message.success()
@@ -177,7 +307,20 @@ const AdminProduct = () => {
 
 
   const onFinish = () => {
-    mutation.mutate(stateProduct)
+    const params = {
+      name: stateProduct.name,
+      price: stateProduct.price,
+      description: stateProduct.description,
+      image: stateProduct.image,
+      type: stateProduct.type === 'add_type' ? stateProduct.newType : stateProduct.type,
+      countInStock: stateProduct.countInStock,
+      discount: stateProduct.discount
+    }
+    mutation.mutate(params, {
+      onSettled: () => {
+        queryProduct.refetch()
+      }
+    })
   }
 
   const handleOnChange = (e) => {
@@ -220,7 +363,11 @@ const AdminProduct = () => {
 
 
   const onUpdateProduct = () => {
-    mutationUpdate.mutate({id: rowSelected,isLoadingUpdated, token: user.access_token, ...stateProductDetails})
+    mutationUpdate.mutate({ id: rowSelected, token: user?.access_token, ...stateProductDetails }, {
+      onSettled: () => {
+        queryProduct.refetch()  
+      }
+    })
   }
 
   return (
@@ -234,7 +381,7 @@ const AdminProduct = () => {
         </Button>
       </div>
       <div style={{ marginTop: '20px' }}>
-        <TableComponents columns={columns} isPending={isPendingProducts} data={dataTable} onRow={(record, rowIndex) => {
+        <TableComponents columns={columns} isPending={isLoadingProducts} data={dataTable} onRow={(record, rowIndex) => {
           return {
             onClick: event => {
               setRowSelected(record._id)
@@ -242,7 +389,7 @@ const AdminProduct = () => {
           }
         }} />
       </div>
-      <Modal title="Tạo sản phẩm" open={isModalOpen} onCancel={handleCancel} footer={null}>
+      <ModalComponent title="Tạo sản phẩm" open={isModalOpen} onCancel={handleCancel} footer={null}>
         <Form
           name="basic"
           labelCol={{ span: 6 }}
@@ -316,7 +463,7 @@ const AdminProduct = () => {
             </Button>
           </Form.Item>
         </Form>
-      </Modal>
+      </ModalComponent>
       <DrawerComponent title='Chi tiết sản phẩm' isOpen={isOpenDrawer} onClose={() => setIsOpenDrawer(false)} width="90%">
         <Form
           name="basic"
@@ -392,6 +539,9 @@ const AdminProduct = () => {
           </Form.Item>
         </Form>
       </DrawerComponent>
+      <ModalComponent title="Xóa sản phẩm" open={isModalOpenDelete} onCancel={handleCancelDelete} onOk={handleDeleteProduct}>
+      <div>Bạn có chắc xóa sản phẩm này không?</div>
+      </ModalComponent>
     </div>
   )
 }
