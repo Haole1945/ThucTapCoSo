@@ -49,7 +49,7 @@ MONGO_DB = mongodb+srv://{example}@cluster0.00xczec.mongodb.net/?retryWrites=tru
 
 
 
-## Authors
+<!-- ## Authors
 
-- [@octokatherine](https://www.github.com/octokatherine)
+- [@name](linkgithub) -->
 

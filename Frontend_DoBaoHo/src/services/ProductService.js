@@ -1,6 +1,13 @@
 import axios from "axios"
 import { axiosJWT } from "./userService"
 
+export const getProductType = async (type) => {
+    if (type) {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/product/get-all?filter=type&filter=${type}`)
+        return res.data
+    }
+}
+
 export const getAllProduct = async (search, limit) => {
     let res = {}
     if (search?.length > 0) {
@@ -10,6 +17,7 @@ export const getAllProduct = async (search, limit) => {
     }
     return res.data
 }
+
 export const createProduct = async(data) => {
     const res = await axios.post(`${process.env.REACT_APP_API_URL}/product/create`, data)
     return res.data
@@ -17,6 +25,11 @@ export const createProduct = async(data) => {
 
 export const getDetailsProduct = async (id) => {
     const res = await axios.get(`${process.env.REACT_APP_API_URL}/product/get-details/${id}`)
+    return res.data
+}
+
+export const getAllTypeProduct = async () => {
+    const res = await axios.get(`${process.env.REACT_APP_API_URL}/product/get-all-type`)
     return res.data
 }
 

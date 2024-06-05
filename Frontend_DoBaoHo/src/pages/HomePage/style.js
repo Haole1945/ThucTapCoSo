@@ -3,6 +3,7 @@ import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import {Row, Col} from 'antd'
 
 export const WrapperButtonMore = styled(ButtonComponent)`
+    background-color: rgb(255,255,0)
     &:hover {
         opacity: 0.8;
     }
