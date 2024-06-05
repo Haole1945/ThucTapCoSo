@@ -200,12 +200,14 @@ const OrderPage = () => {
     },
   ]
   return (
+    
     <div style={{background: '#f5f5fa', with: '100%', height: '100vh'}}>
       <div style={{height: '100%', width: '1270px', margin: '0 auto'}}>
-        <h3 style={{fontWeight: 'bold'}}>Giỏ hàng</h3>
+        <h1> <span style={{cursor: 'pointer', fontWeight:'bold',color:'blue'}} onClick={() => navigate('/')}>Trang chủ</span></h1>
+        <h3 style={{cursor: 'pointer', fontWeight:'bold', fontSize: '35px'}}>Giỏ hàng</h3>
         <div style={{ display: 'flex', justifyContent: 'center'}}>
           <WrapperLeft>
-            <h4>Phí giao hàng</h4>
+            <h4  style={{cursor: 'pointer', fontWeight:'bold',fontSize: '25px'}}>Phí giao hàng</h4>
             <WrapperStyleHeaderDilivery>
               <StepComponent items={itemsDelivery} current={diliveryPriceMemo === 10000 
                 ? 2 : diliveryPriceMemo === 20000 ? 1 
@@ -217,9 +219,9 @@ const OrderPage = () => {
                   <span> Tất cả ({order?.orderItems?.length} sản phẩm)</span>
                 </span>
                 <div style={{flex:1,display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                  <span>Đơn giá</span>
-                  <span>Số lượng</span>
-                  <span>Thành tiền</span>
+                  <span style={{fontWeight:'bold',fontSize: '15px'}}>Đơn giá</span>
+                  <span style={{fontWeight:'bold',fontSize: '15px'}}>Số lượng</span>
+                  <span style={{fontWeight:'bold',fontSize: '15px'}} >Thành tiền</span>
                   <DeleteOutlined style={{cursor: 'pointer'}} onClick={handleRemoveAllOrder}/>
                 </div>
             </WrapperStyleHeader>
@@ -262,9 +264,9 @@ const OrderPage = () => {
             <div style={{width: '100%'}}>
               <WrapperInfo>
                 <div>
-                  <span>Địa chỉ: </span>
-                  <span style={{fontWeight: 'bold'}}>{ `${user?.address} ${user?.city}`} </span>
-                  <span onClick={handleChangeAddress} style={{color: '#9255FD', cursor:'pointer'}}>Thay đổi</span>
+                  <span style={{fontWeight:'bold',fontSize: '25px'}}>Địa chỉ: </span>
+                  <span style={{fontWeight: 'bold',fontSize: '25px'}}>{ `${user?.address} ${user?.city}`} </span>
+                  <span onClick={handleChangeAddress} style={{color: '#9255FD', cursor:'pointer',fontSize:'10px'}}>Thay đổi</span>
                 </div>
               </WrapperInfo>
               <WrapperInfo>

@@ -88,14 +88,13 @@ import slider_2 from '../../assets/images/slider_2.webp';
 import slider_3 from '../../assets/images/slider_3.webp';
 import SliderComponent from '../../components/SliderComponent/SliderComponent';
 import CardComponent from '../../components/CardComponent/CardComponent';
-import NavbarComponent from '../../components/NavbarComponent/NavbarComponent';
 import { Col } from 'antd';
 import { useQuery } from '@tanstack/react-query';
 import * as ProductService from '../../services/ProductService';
 import { useSelector } from 'react-redux';
 import { useDebounce } from '../../hooks/useDebounce';
 import Loading from '../../components/LoadingComponent/Loading';
-
+import NavbarComponent from '../../components/NavbarComponent/NavBarComponent';
 const fetchProductAll = async (context) => {
   const limit = context.queryKey[1];
   const search = context.queryKey[2];

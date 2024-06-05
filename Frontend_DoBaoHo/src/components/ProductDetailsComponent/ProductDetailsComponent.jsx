@@ -7,11 +7,19 @@ import { MinusOutlined, PlusOutlined } from '@ant-design/icons'
 import ButtonComponent from '../ButtonComponent/ButtonComponent'
 import * as ProductService from '../../services/ProductService'
 import { useQuery } from '@tanstack/react-query'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { addOrderProduct,resetOrder } from '../../redux/slides/orderSlide'
 
 const ProductDetailsComponent = ({idProduct}) => {
     const [numProduct, setNumProduct] = useState(1)
     const user = useSelector((state) => state.user)
+    const navigate = useNavigate()
+    const order = useSelector((state) => state.order)
+    const dispatch = useDispatch()
+    const [errorLimitOrder,setErrorLimitOrder] = useState(false)
+    const location = useLocation()
+
     const onChange = (value) => {
         setNumProduct(Number(value))
     }
@@ -34,7 +42,28 @@ const ProductDetailsComponent = ({idProduct}) => {
     }
 
     const {isPending, data: productDetails} = useQuery({ queryKey: ['product-details', idProduct], queryFn: fetchGetDetailsProduct})
-
+    const handleAddOrderProduct = () => {
+        if(!user?.id) {
+            navigate('/sign-in', {state: location?.pathname})
+        }else {
+            const orderRedux = order?.orderItems?.find((item) => item.product === productDetails?._id)
+            if((orderRedux?.amount + numProduct) <= orderRedux?.countInstock || (!orderRedux && productDetails?.countInStock > 0)) {
+                dispatch(addOrderProduct({
+                    orderItem: {
+                        name: productDetails?.name,
+                        amount: numProduct,
+                        image: productDetails?.image,
+                        price: productDetails?.price,
+                        product: productDetails?._id,
+                        discount: productDetails?.discount,
+                        countInstock: productDetails?.countInStock
+                    }
+                }))
+            } else {
+                setErrorLimitOrder(true)
+            }
+        }
+    }
   return (
         <Row style={{backgroundColor: '#fff'}}>
             <Col span ={10} >
@@ -72,6 +101,7 @@ const ProductDetailsComponent = ({idProduct}) => {
                             border: 'none',
                             borderRadius: '4px'
                         }}
+                        onClick={handleAddOrderProduct}
                         textButton={'Chọn mua'}
                         styleTextButton={{color: '#fff'}}
                     />

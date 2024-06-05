@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { WrapperContainer, WrapperTextLight } from './style'
 import InputForm from '../../components/InputForm/InputForm'
 import ButtonComponent from '../../components/ButtonComponent/ButtonComponent'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { EyeFilled, EyeInvisibleFilled } from '@ant-design/icons'
 import * as userService from '../../services/userService'
 import { useMutationHooks } from '../../hooks/useMutationHook'
@@ -15,7 +15,7 @@ import { updateUser } from '../../redux/slides/userSlide'
 const SignInPage = () => {
 
   const [isShowPassword, setIsShowPassword] = useState(false)
-
+  const location = useLocation();
   const dispatch = useDispatch();
 
   const navigate = useNavigate()
@@ -30,8 +30,12 @@ const SignInPage = () => {
   const {data, isPending, isSuccess, isError} = mutation
 
   useEffect(() => {
-    if(isSuccess) {
-      navigate('/')
+    if (isSuccess) {
+      if(location?.state) {
+        navigate(location?.state)
+      }else {
+        navigate('/')
+      }
       localStorage.setItem('access_token', JSON.stringify(data?.access_token))
       if(data?.access_token){
         const decoded = jwtDecode(data?.access_token)
