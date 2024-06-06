@@ -25,6 +25,9 @@ const authUserMiddleWare = (req,res,next) => {
 
 const authMiddleWare = (req,res,next) => {
     const token = req.headers.token.split(' ')[1]
+    // console.log('token', token)
+    // console.log('process.env.ACCESS_TOKEN', process.env.ACCESS_TOKEN)
+
     jwt.verify(token, process.env.ACCESS_TOKEN, function(err, user){
         if(err){
             return res.status(404).json({
@@ -42,6 +45,8 @@ const authMiddleWare = (req,res,next) => {
         }
     })
 }
+
+
 
 module.exports = {
     authMiddleWare,

@@ -135,12 +135,12 @@ const NavbarComponent = ({ onUpdateProducts }) => {
     try {
       const res = await ProductService.getProductType(type);
       if (res?.status === 'OK') {
-        onUpdateProducts(res.data); // Call callback to update products in HomePage
+        onUpdateProducts(res.data); 
       } else {
-        console.error('Failed to fetch products');
+        console.error('lỗi fetch product');
       }
     } catch (error) {
-      console.error('Error fetching product type:', error);
+      console.error('Error:', error);
     }
   };
 
@@ -148,12 +148,12 @@ const NavbarComponent = ({ onUpdateProducts }) => {
     try {
       const res = await ProductService.getAllProduct();
       if (res?.status === 'OK') {
-        onUpdateProducts(res.data); // Reset to all products
+        onUpdateProducts(res.data); 
       } else {
-        console.error('Failed to fetch all products');
+        console.error('lỗi fetch product');
       }
     } catch (error) {
-      console.error('Error fetching all products:', error);
+      console.error('Error:', error);
     }
   };
 
@@ -163,10 +163,10 @@ const NavbarComponent = ({ onUpdateProducts }) => {
       if (res?.status === 'OK') {
         setTypeProducts(res.data);
       } else {
-        console.error('Failed to fetch product types');
+        console.error('lỗi fetch product');
       }
     } catch (error) {
-      console.error('Error fetching all product types:', error);
+      console.error('Error:', error);
     }
   };
 

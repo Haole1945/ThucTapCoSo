@@ -265,7 +265,7 @@ const OrderPage = () => {
               <WrapperInfo>
                 <div>
                   <span style={{fontWeight:'bold',fontSize: '25px'}}>Địa chỉ: </span>
-                  <span style={{fontWeight: 'bold',fontSize: '25px'}}>{ `${user?.address} ${user?.city}`} </span>
+                  <span style={{fontWeight: 'bold',fontSize: '25px'}}>{ `${user?.address}`} </span>
                   <span onClick={handleChangeAddress} style={{color: '#9255FD', cursor:'pointer',fontSize:'10px'}}>Thay đổi</span>
                 </div>
               </WrapperInfo>

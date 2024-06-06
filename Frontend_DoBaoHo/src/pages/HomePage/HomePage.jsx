@@ -94,7 +94,7 @@ import * as ProductService from '../../services/ProductService';
 import { useSelector } from 'react-redux';
 import { useDebounce } from '../../hooks/useDebounce';
 import Loading from '../../components/LoadingComponent/Loading';
-import NavbarComponent from '../../components/NavbarComponent/NavBarComponent';
+import NavbarComponent from '../../components/NavbarComponent/NavbarComponent'
 const fetchProductAll = async (context) => {
   const limit = context.queryKey[1];
   const search = context.queryKey[2];
