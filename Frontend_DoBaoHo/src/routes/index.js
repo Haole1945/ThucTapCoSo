@@ -7,6 +7,7 @@ import SignUpPage from "../pages/SignUpPage/SignUpPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage/ProductDetailsPage";
 import ProfilePage from "../pages/Profile/ProfilePage";
 import AdminPage from "../pages/AdminPage/AdminPage";
+import DonePage from "../pages/DonePage/DonePage";
 
 export const routes = [
     {
@@ -53,6 +54,11 @@ export const routes = [
     {
         path:'*',
         page: NotFoundPage,     
-    }
+    },
+    {
+        path: '/thank',
+        page: DonePage,
+        isShowHeader: true
+    },
 ]   
 

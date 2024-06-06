@@ -45,7 +45,7 @@ const AdminUser = () => {
   const [form] = Form.useForm();
 
   const getAllUsers = async () => {
-    const res = UserService.getAllUser()
+    const res = UserService.getAllUser(user?.access_token)
     return res
   }
 

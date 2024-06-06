@@ -33,14 +33,13 @@ const ProductDetailsComponent = ({idProduct}) => {
     }
 
     const handleChangeCount = (type) => {
-        if(type === 'increase'){
-            setNumProduct(numProduct + 1)
-        }
-        else {
-            setNumProduct(numProduct - 1)
+        if (type === 'increase') {
+            setNumProduct(numProduct + 1);  
+        } else if (type === 'decrease' && numProduct > 0) {
+            setNumProduct(numProduct - 1);
         }
     }
-
+    
     const {isPending, data: productDetails} = useQuery({ queryKey: ['product-details', idProduct], queryFn: fetchGetDetailsProduct})
     const handleAddOrderProduct = () => {
         if(!user?.id) {
@@ -70,14 +69,16 @@ const ProductDetailsComponent = ({idProduct}) => {
                 <Image src={productDetails?.image} alt="image product" preview={false} style = {{width: 'auto', height: '400px'}} />
             </Col>
             <Col span ={14}>
-                <WrapperStyleNameProduct>{productDetails?.name}</WrapperStyleNameProduct>
+                <WrapperStyleNameProduct>
+                    <span style={{color:'red'}}>Tên sản phẩm: </span>
+                    {productDetails?.name}</WrapperStyleNameProduct>
                 <WrapperPriceProduct>
-                    <WrapperPriceTextProduct>{productDetails?.price}</WrapperPriceTextProduct>
+                    <span style={{color:'red',fontWeight: 'bold'}}>Giá sản phẩm: </span>
+                   <span style={{color: ' rgb(0, 0, 255)', fontWeight: 'bold' }}>{productDetails?.price}</span> VNĐ
                 </WrapperPriceProduct>
                 <WrapperAddressProduct>
-                    <span> Giao đến</span>
-                    <span className='address'>{user?.address}</span> - 
-                    <span className='change-address'> Đổi địa chỉ</span>
+                    <span style={{color: 'red', fontWeight: 'bold' }}> Giao đến:  </span>
+                    <span>{user?.address}</span> 
                 </WrapperAddressProduct>
                 <div>
                     <div>Số lượng</div>
@@ -110,5 +111,4 @@ const ProductDetailsComponent = ({idProduct}) => {
         </Row>  
     )
 }
-
 export default ProductDetailsComponent

@@ -20,7 +20,7 @@ const CardComponent = (props) => {
     >
       <StyleNameProduct>{name}</StyleNameProduct>
       <WrapperPriceText>
-        <span style={{ marginRight: '8px'}}>{price?.toLocaleString()}</span>
+        <span><span style={{ marginRight: '8px'}}>{price?.toLocaleString()}</span>VNĐ</span>
       </WrapperPriceText>
     </WrapperCardStyle>
   )

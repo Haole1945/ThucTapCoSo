@@ -12,7 +12,8 @@ export const WrapperStyleNameProduct = styled.h1`
 
 export const WrapperPriceProduct = styled.h1`
     border-radius: 4px;
-    margin: 24px 0 32px 32px;
+    margin: px 0 32px 32px;
+    font-size: 50;  
 `
 
 export const WrapperPriceTextProduct = styled.h1`
@@ -21,10 +22,10 @@ export const WrapperPriceTextProduct = styled.h1`
     font-weight: 500;
 `
 
-export const WrapperAddressProduct = styled.div`
+export const WrapperAddressProduct = styled.h1`
     span.address {
         text-decoration: underline;
-        font-size: 16px;
+        font-size: 30px;
         line-height: 24px;
         font-weight: 500;
         white-space: nowrap;
