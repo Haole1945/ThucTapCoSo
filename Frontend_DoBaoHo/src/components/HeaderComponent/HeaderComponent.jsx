@@ -51,7 +51,10 @@ const HeaderComponent = ({isHiddenSearch = false, isHiddenCart = false}) => {
     <div>
       <WrapperHeader gutter={16} style={{justifyContent: isHiddenSearch && isHiddenSearch ? 'space-between' : 'unset'}}>
         <Col span={6}>
-            <WrapperTextHeader>ĐỒ BẢO HỘ XE MÁY</WrapperTextHeader>    
+            <WrapperTextHeader>
+              <span style={{cursor: 'pointer', fontWeight:'bold'}} onClick={() => navigate('/')}>ĐỒ BẢO HỘ XE MÁY
+               </span> 
+            </WrapperTextHeader>  
         </Col>
         {!isHiddenSearch && (
           <Col span={12}>

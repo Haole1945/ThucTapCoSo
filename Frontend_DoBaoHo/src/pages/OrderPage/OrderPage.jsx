@@ -216,11 +216,10 @@ const OrderPage = () => {
     
     <div style={{background: '#f5f5fa', with: '100%', height: '100vh'}}>
       <div style={{height: '100%', width: '1270px', margin: '0 auto'}}>
-        <h1> <span style={{cursor: 'pointer', fontWeight:'bold',color:'blue'}} onClick={() => navigate('/')}>Trang chủ</span></h1>
-        <h3 style={{cursor: 'pointer', fontWeight:'bold', fontSize: '35px'}}>Giỏ hàng</h3>
-        <div style={{ display: 'flex', justifyContent: 'center'}}>
+        <h5 style={{ fontWeight:'bold', fontSize: '35px', paddingTop: '15px', color: 'purple'}}>Giỏ hàng</h5>
+        <div style={{ display: 'flex', justifyContent: 'center', paddingLeft: '15px'}}>
           <WrapperLeft>
-            <h4  style={{cursor: 'pointer', fontWeight:'bold',fontSize: '25px'}}>Phí giao hàng</h4>
+            <h4  style={{cursor: 'pointer', fontWeight:'bold',fontSize: '23px', color:'green', paddingBottom: '10px'}}>Phí giao hàng</h4>
             <WrapperStyleHeaderDilivery>
               <StepComponent items={itemsDelivery} current={diliveryPriceMemo === 10000 
                 ? 2 : diliveryPriceMemo === 20000 ? 1 
@@ -229,13 +228,13 @@ const OrderPage = () => {
             <WrapperStyleHeader>
                 <span style={{display: 'inline-block', width: '390px'}}>
                   <CustomCheckbox onChange={handleOnchangeCheckAll} checked={listChecked?.length === order?.orderItems?.length}></CustomCheckbox>
-                  <span> Tất cả ({order?.orderItems?.length} sản phẩm)</span>
+                  <span style={{fontSize: '15px'}}> Tất cả ({order?.orderItems?.length} sản phẩm)</span>
                 </span>
                 <div style={{flex:1,display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                  <span style={{fontWeight:'bold',fontSize: '15px'}}>Đơn giá</span>
-                  <span style={{fontWeight:'bold',fontSize: '15px'}}>Số lượng</span>
+                  <span style={{fontWeight:'bold',fontSize: '15px', margin: '0 10px'}}>Đơn giá</span>
+                  <span style={{fontWeight:'bold',fontSize: '15px', marginLeft: '10px'}}>Số lượng</span>
                   <span style={{fontWeight:'bold',fontSize: '15px'}} >Thành tiền</span>
-                  <DeleteOutlined style={{cursor: 'pointer'}} onClick={handleRemoveAllOrder}/>
+                  <DeleteOutlined style={{cursor: 'pointer', fontSize: '200%'}} onClick={handleRemoveAllOrder}/>
                 </div>
             </WrapperStyleHeader>
             <WrapperListOrder>
@@ -249,12 +248,14 @@ const OrderPage = () => {
                     width: 260,
                     overflow: 'hidden',
                     textOverflow:'ellipsis',
-                    whiteSpace:'nowrap'
+                    whiteSpace:'nowrap',
+                    fontSize: '15px',
+                    fontWeight: 'bold'
                   }}>{order?.name}</div>
                 </div>
                 <div style={{flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                   <span>
-                    <span style={{ fontSize: '13px', color: '#242424' }}>{convertPrice(order?.price)}</span>
+                    <span style={{ fontSize: '13px', color: '#242424',fontSize: '15px' }}>{convertPrice(order?.price)}</span>
                   </span>
                   <WrapperCountOrder>
                     <button style={{ border: 'none', background: 'transparent', cursor: 'pointer' }} onClick={() => handleChangeCount('decrease',order?.product, order?.amount === 1)}>
@@ -265,21 +266,23 @@ const OrderPage = () => {
                         <PlusOutlined style={{ color: '#000', fontSize: '10px' }}/>
                     </button>
                   </WrapperCountOrder>
-                  <span style={{color: 'rgb(255, 66, 78)', fontSize: '13px', fontWeight: 500}}>{convertPrice(order?.price * order?.amount)}</span>
-                  <DeleteOutlined style={{cursor: 'pointer'}} onClick={() => handleDeleteOrder(order?.product)}/>
+                  <span style={{color: 'rgb(255, 66, 78)', fontSize: '15px', fontWeight: 500}}>{convertPrice(order?.price * order?.amount)}</span>
+                  <DeleteOutlined style={{cursor: 'pointer', fontSize: '200%'}} onClick={() => handleDeleteOrder(order?.product)}/>
                 </div>
               </WrapperItemOrder>
                 )
               })}
             </WrapperListOrder>
           </WrapperLeft>
-          <WrapperRight>
+          <WrapperRight style={{paddingTop: '-100px'}}>
             <div style={{width: '100%'}}>
               <WrapperInfo>
                 <div>
-                  <span style={{fontWeight:'bold',fontSize: '25px'}}>Địa chỉ: </span>
-                  <span style={{fontWeight: 'bold',fontSize: '25px'}}>{ `${user?.address}`} </span>
-                  <h2 onClick={() => navigate('/profile-user')} style={{color: '#9255FD', cursor:'pointer',fontSize:'15px'}}>Kiểm tra thông tin trước khi đặt hàng</h2>
+                  <div style={{marginBottom: '5px'}}>
+                    <span style={{fontWeight:'bold',fontSize: '25px'}}>Địa chỉ: </span>
+                    <span style={{fontWeight: 'bold',fontSize: '25px'}}>{ `${user?.address}`} </span>
+                  </div>
+                  <span onClick={() => navigate('/profile-user')} style={{color: '#9255FD', cursor:'pointer',fontSize:'15px'}}>Kiểm tra thông tin trước khi đặt hàng</span>
                 </div>
               </WrapperInfo>
               <WrapperInfo>
@@ -288,7 +291,7 @@ const OrderPage = () => {
                   <span style={{color: '#000', fontSize: '14px', fontWeight: 'bold'}}>{convertPrice(priceMemo)}</span>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                  <span style={{fontSize: '15px'}}>Giảm giá</span>
+                  <span style={{fontSize: '15px', margin:'5px 0'}}>Giảm giá</span>
                   <span style={{color: '#000', fontSize: '14px', fontWeight: 'bold'}}>{convertPrice(priceDiscountMemo)}</span>
                 </div>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
@@ -297,7 +300,7 @@ const OrderPage = () => {
                 </div>
               </WrapperInfo>
               <WrapperTotal>
-                <span>Tổng tiền</span>
+                <span style={{fontSize: '15px', fontWeight:'bold'}}>Tổng tiền</span>
                 <span style={{display:'flex', flexDirection: 'column'}}>
                   <span style={{color: 'rgb(254, 56, 52)', fontSize: '24px', fontWeight: 'bold'}}>{convertPrice(totalPriceMemo)}</span>
                   <span style={{color: '#000', fontSize: '11px'}}>(Đã bao gồm VAT nếu có)</span>

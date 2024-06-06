@@ -8,6 +8,7 @@ import { useMutationHooks } from '../../hooks/useMutationHook'
 import Loading from '../../components/LoadingComponent/Loading'
 import * as message from '../../components/Message/Message'
 import { updateUser } from '../../redux/slides/userSlide'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -17,6 +18,8 @@ const ProfilePage = () => {
     const [name,setName] = useState('')
     const [phone,setPhone] = useState('')
     const [address,setAddress] = useState('')
+    const navigate = useNavigate()
+
     const mutation = useMutationHooks(
         (data) => {
             const {id,access_token, ...rests } = data

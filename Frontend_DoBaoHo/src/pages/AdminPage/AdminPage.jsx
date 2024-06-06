@@ -28,7 +28,6 @@ const AdminPage = () => {
         return <></>
     }
   }
-  
 
   const handleOnClick = ({key}) =>{
     setKeySelected(key)
