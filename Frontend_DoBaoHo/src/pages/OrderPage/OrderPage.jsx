@@ -146,7 +146,7 @@ const OrderPage = () => {
             okText: 'Yes',
             cancelText: 'No',
             onOk() {      
-                navigate('/thank');
+                navigate('/payment');
             },
             onCancel() {
                 message.error('Người dùng đã hủy xác nhận.');
