@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { WrapperHeader } from './style'
-import { Button, Form, Modal, Space, Upload, message } from 'antd'
+import { Button, Form, Space, Upload, message } from 'antd'
 import { DeleteOutlined, EditOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons'
 import TableComponents from '../TableComponents/TableComponents'
 import InputComponent from './../InputComponent/InputComponent';
@@ -56,7 +56,6 @@ const AdminProduct = () => {
         image: res?.data?.image,
         type: res?.data?.type,
         countInStock: res?.data?.countInStock,
-        discount: res?.data?.discount
       })
       form.setFieldsValue(res.data);
     }
@@ -298,7 +297,6 @@ const AdminProduct = () => {
       image: stateProduct.image,
       type: stateProduct.type === 'add_type' ? stateProduct.newType : stateProduct.type,
       countInStock: stateProduct.countInStock,
-      discount: stateProduct.discount
     }
     mutation.mutate(params, {
       onSettled: () => {

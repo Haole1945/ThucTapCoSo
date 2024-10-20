@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { WrapperLabelText, WrapperTextValue, WrapperContent } from './style';
 import * as ProductService from '../../services/ProductService';
-import { Button } from 'antd';
-import ButtonComponent from '../ButtonComponent/ButtonComponent';
 
 const NavbarComponent = ({ onUpdateProducts }) => {
   const [typeProducts, setTypeProducts] = useState([]);
@@ -13,7 +11,7 @@ const NavbarComponent = ({ onUpdateProducts }) => {
       if (res?.status === 'OK') {
         onUpdateProducts(res.data); 
       } else {
-        console.error('lỗi fetch product');
+        console.error('lỗi fetch product type');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -26,7 +24,7 @@ const NavbarComponent = ({ onUpdateProducts }) => {
       if (res?.status === 'OK') {
         onUpdateProducts(res.data); 
       } else {
-        console.error('lỗi fetch product');
+        console.error('lỗi fetch all product');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -39,7 +37,7 @@ const NavbarComponent = ({ onUpdateProducts }) => {
       if (res?.status === 'OK') {
         setTypeProducts(res.data);
       } else {
-        console.error('lỗi fetch product');
+        console.error('lỗi fetch all type product');
       }
     } catch (error) {
       console.error('Error:', error);
